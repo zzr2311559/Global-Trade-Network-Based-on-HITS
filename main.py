@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-from hits import hits_algorithm
+from algo.HITS import hits_algorithm
 
 def build_trade_network(data_path, target_year=2021):
     
