@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import argparse
 
 def plot_and_save_scatter(csv_path, output_image_path, top_n_annotate=15):
     """
@@ -15,8 +16,8 @@ def plot_and_save_scatter(csv_path, output_image_path, top_n_annotate=15):
     plt.figure(figsize=(12, 9))
     
     # 提取坐标和国家名
-    x = df['Hub Score (核心出口国)']
-    y = df['Authority Score (核心进口国)']
+    x = df['Hub Score (出)']
+    y = df['Authority Score (进)']
     countries = df['Country']
     
     # 绘制基础散点
@@ -56,10 +57,9 @@ def plot_and_save_scatter(csv_path, output_image_path, top_n_annotate=15):
     # 弹窗显示图片 (如果你是在服务器或 SSH 上运行，可以注释掉这一行)
     plt.show()
 
-if __name__ == "__main__":
     # 定义输入和输出路径
-    data_file = "./result/hits_scores_2021.csv"
-    img_file = "./result/hits_scatter_2021.png"
+    data_file = "./result/vanilla_hits_scores_2021.csv"
+    img_file = "./result/vanilla_hits_scatter_2021.png"
     
     # 防呆检查：确保数据文件存在
     if not os.path.exists(data_file):
@@ -67,3 +67,31 @@ if __name__ == "__main__":
         print("💡 请先运行: python main.py")
     else:
         plot_and_save_scatter(data_file, img_file)
+        
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--Geo', action='store_true', help="Geo-biased HITS")
+
+    args = parser.parse_args()
+    
+    if args.Geo:
+        data_file = "./result/geobiased_hits_scores_2021.csv"
+        img_file = "./result/geobiased_hits_scatter_2021.png"
+
+    else:
+        data_file = "./result/vanilla_hits_scores_2021.csv"
+        img_file = "./result/vanilla_hits_scatter_2021.png"
+    
+    # 防呆检查：确保数据文件存在
+    if not os.path.exists(data_file):
+        print(f"❌ 找不到数据文件 {data_file}！")
+        print("💡 请先运行: python main.py")
+    else:
+        plot_and_save_scatter(data_file, img_file)
+        
+    
+if __name__ == "__main__":
+    """
+    Usage: Run 'python main.py --Geo' to use geobiased HITS.
+    """
+    main()

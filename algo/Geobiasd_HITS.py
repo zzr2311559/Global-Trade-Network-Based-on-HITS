@@ -34,6 +34,7 @@ class GeobiasedHITS(hits_algorithm):
                         penalty = (dist + 1) ** gamma
                         biased_matrix[i, j] = biased_matrix[i, j] / penalty
                     else:
-                        biased_matrix[i, j] = biased_matrix[i, j] * 0.1
+                        print(f"找不到坐标，跳过匹配: {u_name} 或 {v_name}") # 加这一行
+                        biased_matrix[i, j] = biased_matrix[i, j] * 0.0
                         
         return biased_matrix
