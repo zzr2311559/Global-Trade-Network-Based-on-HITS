@@ -85,7 +85,7 @@ def plot_results(results_df):
     sns.lineplot(data=reward_df, x='Gamma', y='Spearman_Coef', marker='D', 
                  linewidth=2.5, markersize=9, color='#27ae60', label='Reward Distance (Global Anchors)')
     
-    # 提取传统的基线并画虚线 (这部分没有做) 
+    # 提取传统的基线并画虚线 (红色) 
     vanilla_row = results_df[results_df['Model'] == 'Vanilla HITS (Baseline)']
     if not vanilla_row.empty:
         vanilla_coef = vanilla_row.iloc[0]['Spearman_Coef']
